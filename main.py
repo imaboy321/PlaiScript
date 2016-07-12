@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Imports
 import sys, os, urllib, htmllib, time
 from sys import exit
@@ -148,5 +147,4 @@ elif main_selection == 2:
     cleanup()
 else:
     sys.exit()
->>>>>>> origin/master
 restart()
