@@ -72,7 +72,6 @@ elif main_selection == 2:
     cleanup()
 else:
     sys.exit()
-=======
 #Imports
 import sys, os, urllib, htmllib, time
 from sys import exit
@@ -86,6 +85,7 @@ current_date = time.localtime()
 current_date = str([current_date[0], current_date[1],current_date[2]])
 #Definitions
 def get_all_pages():
+    #Downloads all pages in pages.txt
     page_text = open(html_directory+"/pages.txt",'r')
     for link in page_text:
         stripped_link = link.strip("\n")
@@ -94,10 +94,12 @@ def get_all_pages():
     urllib.urlretrieve("https://github.com/Plailect/Guide/wiki", html_directory + "/home_page.html") #Home Page
 
 def list_html():
+    #Adds names of all files in HTML Dir to html_directory_files
     for html_file in os.listdir(html_directory):
         html_directory_files.append(html_file)
 
 def cleanup():
+    #Deletes all files except pages.txt and last_checked.txt
     for cleanup_html in os.listdir(html_directory):
         if cleanup_html != "pages.txt":
             if cleanup_html != "last_checked.txt":
@@ -107,13 +109,16 @@ def cleanup():
             pass
 
 def date_check():
+    #Checks if last_checked.txt exists, and if not creates it
     list_html()
     if "last_checked.txt" in html_directory_files:
         pass
     else:
         last_checked = open(html_directory+"/last_checked.txt", 'w+')
+    #Reads last_checked.txt and adds it to last_checked var
     last_checked = open(html_directory+"/last_checked.txt", 'r')
     last_checked_read = last_checked.read()
+    #Compares current_date to last_checked_read and if same, returns false, else it writes the current date to the file and returns true
     if current_date == last_checked_read:
         return False
     else:
@@ -126,11 +131,8 @@ def html_update_check():
     update_check_result = date_check()
     if update_check_result == True:
         print "Probably needs an update!"
-        update_date_file = open(html_directory+"/last_checked.txt", 'w')
-        update_date_file.write(str(current_date))
     elif update_check_result == False:
         print "Last check today!"
-
 
 def restart():
     os.execl(python, python, * sys.argv)
