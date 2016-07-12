@@ -1,5 +1,5 @@
 #Imports
-import sys, os, urllib, htmllib, time
+import sys, os, urllib, htmllib, time, guide
 from sys import exit
 #Base Variables
 version = "0.0.1"
@@ -9,7 +9,6 @@ html_directory_files = []
 python = sys.executable
 current_date = time.localtime()
 current_date = str([current_date[0], current_date[1],current_date[2]])
-guide = "guide.py"
 #Definitions
 def get_all_pages():
     page_text = open(html_directory+"/pages.txt",'r')
@@ -60,19 +59,30 @@ def html_update_check():
 
 def restart():
     os.execl(python, python, * sys.argv)
+
+
 #Main
-html_update_check()
-main_selection = raw_input("Version: "+ version + " " + versionName+"\nSelection:\n 1. Download all html files \n 2. Cleanup Files \n Anything else to exit\n")
-try:
-    main_selection = int(main_selection)
-except:
-    exit()
-if main_selection == 1:
-    get_all_pages()
-elif main_selection == 2:
-    cleanup()
-elif main_selection == 3:
-    os.execl(guide, "")
-else:
-    sys.exit()
-restart()
+def main():
+    html_update_check()
+    main_selection = raw_input("Version: " + version + " " + versionName + "\nSelection:\n" +
+                               "  1. Download all html files \n  2. Cleanup Files \n"
+                               "  3. Start Guide \n  Anything else to exit\n")
+    try:
+        main_selection = int(main_selection)
+    except:
+        exit()
+    if main_selection == 1:
+        get_all_pages()
+    elif main_selection == 2:
+        cleanup()
+    elif main_selection == 3:
+        guide.main()
+    else:
+        sys.exit()
+    restart()
+
+
+
+
+if __name__ == '__main__':
+    main()
