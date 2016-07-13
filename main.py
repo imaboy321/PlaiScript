@@ -1,7 +1,8 @@
 #Imports
+
 import sys, os, time, guide, downloader
-from sys import exit
 #Base Variables
+
 version = "0.0.1"
 versionName = "The Simple One"
 html_directory = "html"
@@ -10,8 +11,8 @@ html_directory_files = []
 python = sys.executable
 current_date = time.localtime()
 current_date = str([current_date[0], current_date[1],current_date[2]])
-#Definitions
 
+#Functions
 
 def list_html():
     for html_file in os.listdir(html_directory):
@@ -73,25 +74,27 @@ def select_download():
 
 
 #Main
+
 def main():
     html_update_check()
-    main_selection = raw_input("Version: " + version + " " + versionName + "\nSelection:\n" +
-                               "  1. Download html files \n  2. Cleanup Files \n"
-                               "  3. Start Guide \n")
-    try:
-        main_selection = int(main_selection)
-    except:
-        print "Not a selection!"
-        restart()
-    if main_selection == 1:
-        select_download()
-    elif main_selection == 2:
-        cleanup()
-    elif main_selection == 3:
-        guide.main()
-    else:
-        sys.exit()
-    restart()
+    print "Version: " + version + " " + versionName
+    while True:
+        main_selection = raw_input(" \nSelection:\n" +
+                                   "   1. Download html files \n   2. Cleanup Files \n"
+                                   "   3. Start Guide \n   Anything else to exit.")
+        try:
+            main_selection = int(main_selection)
+        except:
+            print "Exiting..."
+            break
+        if main_selection == 1:
+            select_download()
+        elif main_selection == 2:
+            cleanup()
+        elif main_selection == 3:
+            guide.main()
+        else:
+            sys.exit()
 
 
 

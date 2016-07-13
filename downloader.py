@@ -28,7 +28,7 @@ def get_page():
         number += 1
     try:
         global selection
-        selection = int(raw_input("Which page would you like?"))
+        selection = int(raw_input("Which page would you like?\n"))
     except:
         print "Not a number!"
         __main__.restart()
