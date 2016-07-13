@@ -1,22 +1,17 @@
 #Imports
-import sys, os, urllib, htmllib, time, guide
+import sys, os, time, guide, downloader
 from sys import exit
 #Base Variables
 version = "0.0.1"
 versionName = "The Simple One"
-html_directory = "HTML"
+html_directory = "html"
+html_pages = html_directory+"/pages.txt"
 html_directory_files = []
 python = sys.executable
 current_date = time.localtime()
 current_date = str([current_date[0], current_date[1],current_date[2]])
 #Definitions
-def get_all_pages():
-    page_text = open(html_directory+"/pages.txt",'r')
-    for link in page_text:
-        stripped_link = link.strip("\n")
-        urllib.urlretrieve(stripped_link, (html_directory+"/"+stripped_link.strip("https://github.com/Plailect/Guide/wiki/Part-")+".html"))
-        print "downloaded",stripped_link.strip("https://github.com/Plailect/Guide/wiki/Part-")
-    urllib.urlretrieve("https://github.com/Plailect/Guide/wiki", html_directory + "/home_page.html") #Home Page
+
 
 def list_html():
     for html_file in os.listdir(html_directory):
@@ -60,19 +55,36 @@ def html_update_check():
 def restart():
     os.execl(python, python, * sys.argv)
 
+def select_download():
+    try:
+        download_select = int(raw_input("\nWhich would you like to download?\n"
+                                    "  1. All\n"
+                                    "  2. Single File\n"))
+    except:
+        print "Not a selection!"
+        restart()
+    if download_select == 1:
+        downloader.get_all_pages()
+    elif download_select == 2:
+        downloader.get_page()
+    else:
+        print "Not a selection!"
+        restart()
+
 
 #Main
 def main():
     html_update_check()
     main_selection = raw_input("Version: " + version + " " + versionName + "\nSelection:\n" +
-                               "  1. Download all html files \n  2. Cleanup Files \n"
-                               "  3. Start Guide \n  Anything else to exit\n")
+                               "  1. Download html files \n  2. Cleanup Files \n"
+                               "  3. Start Guide \n")
     try:
         main_selection = int(main_selection)
     except:
-        exit()
+        print "Not a selection!"
+        restart()
     if main_selection == 1:
-        get_all_pages()
+        select_download()
     elif main_selection == 2:
         cleanup()
     elif main_selection == 3:
