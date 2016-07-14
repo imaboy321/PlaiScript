@@ -81,7 +81,7 @@ def main():
     while True:
         main_selection = raw_input(" \nSelection:\n" +
                                    "   1. Download html files \n   2. Cleanup Files \n"
-                                   "   3. Start Guide \n   Anything else to exit.")
+                                   "   3. Start Guide \n   Anything else to exit.\n")
         try:
             main_selection = int(main_selection)
         except:
