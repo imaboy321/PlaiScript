@@ -9,8 +9,10 @@ Current Features:
     Downloading of the HTML files which links are in html/pages.txt
     Cleanup of files
     Date checking for updates
+    Basic parsing
 
 Proposed features:
-    html parsing to get current guide steps
+    more advanced html parsing to get current guide steps
     Complete GUI
-    
+
+**THIS IS NOW USABLE. YOU CAN MANUALLY UPDATE THE FILES FROM WITHIN THE SCRIPT AND IT WILL DISPLAY ALL THE RELEVANT INFORMATION FOR YOU**

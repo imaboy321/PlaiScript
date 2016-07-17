@@ -5,14 +5,15 @@ from time import sleep
 
 #Base Variables
 
-version = "0.0.1"
-versionName = "The Simple One"
+version = "0.0.2"
+versionName = "The Basic Function One"
 html_directory = "html"
 html_pages = html_directory+"/pages.txt"
 html_directory_files = []
 python = sys.executable
 current_date = time.localtime()
-current_date = str([current_date[0], current_date[1],current_date[2]])
+current_date = [current_date[0], current_date[1], current_date[2]]
+last_checked_read = ""
 
 #Functions
 
@@ -30,30 +31,31 @@ def cleanup():
             pass
 
 def date_check():
+    global last_checked_read
     list_html()
     if "last_checked.txt" in html_directory_files:
         pass
     else:
         last_checked = open(html_directory+"/last_checked.txt", 'w+')
     last_checked = open(html_directory+"/last_checked.txt", 'r')
-    last_checked_read = last_checked.read()
+    last_checked_read = [int(x) for x in((last_checked.read()).strip("[]")).split(",")]
     if current_date == last_checked_read:
         return False
     else:
         last_checked = open(html_directory+"/last_checked.txt", 'w')
-        last_checked.write(current_date)
+        last_checked.write(str(current_date))
         return True
     last_checked.close()
 
 def html_update_check():
+    global last_checked_read
     update_check_result = date_check()
     if update_check_result == True:
-        print "Probably needs an update!"
+        print "Last check {0}-{1}-{2}".format(last_checked_read[1], last_checked_read[2], last_checked_read[0])
         update_date_file = open(html_directory+"/last_checked.txt", 'w')
         update_date_file.write(str(current_date))
     elif update_check_result == False:
-        print "Last check today!"
-
+        print "Last check was today! {0}-{1}-{2}".format(last_checked_read[1], last_checked_read[2], last_checked_read[0])
 
 def restart():
     os.execl(python, python, * sys.argv)
@@ -76,7 +78,6 @@ def select_download():
 
 
 #Main
-
 def main():
     html_update_check()
     print "Version: " + version + " " + versionName
