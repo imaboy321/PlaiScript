@@ -31,6 +31,7 @@ def cleanup():
             pass
 
 def date_check():
+    #Returns True if same as last checked and False if different
     global last_checked_read
     list_html()
     if "last_checked.txt" in html_directory_files:
@@ -38,23 +39,26 @@ def date_check():
     else:
         last_checked = open(html_directory+"/last_checked.txt", 'w+')
     last_checked = open(html_directory+"/last_checked.txt", 'r')
-    last_checked_read = [int(x) for x in((last_checked.read()).strip("[]")).split(",")]
+    try:
+        last_checked_read = [int(x) for x in ((last_checked.read()).strip("[]")).split(",")]
+    except ValueError:
+        last_checked_read = ["Never", "Never", "Never"]
     if current_date == last_checked_read:
-        return False
+        return True
     else:
         last_checked = open(html_directory+"/last_checked.txt", 'w')
         last_checked.write(str(current_date))
-        return True
+        return False
     last_checked.close()
 
 def html_update_check():
     global last_checked_read
     update_check_result = date_check()
-    if update_check_result == True:
+    if update_check_result == False:
         print "Last check {0}-{1}-{2}".format(last_checked_read[1], last_checked_read[2], last_checked_read[0])
         update_date_file = open(html_directory+"/last_checked.txt", 'w')
         update_date_file.write(str(current_date))
-    elif update_check_result == False:
+    elif update_check_result == True:
         print "Last check was today! {0}-{1}-{2}".format(last_checked_read[1], last_checked_read[2], last_checked_read[0])
 
 def restart():
