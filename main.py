@@ -1,6 +1,8 @@
 #Imports
 
 import sys, os, time, guide, downloader
+from time import sleep
+
 #Base Variables
 
 version = "0.0.1"
@@ -94,6 +96,8 @@ def main():
         elif main_selection == 3:
             guide.main()
         else:
+            print "Exiting..."
+            sleep(2)
             sys.exit()
 
 

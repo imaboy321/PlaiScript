@@ -1,5 +1,6 @@
 #Modules
 import urllib, __main__,sys
+from time import sleep
 
 #Variables
 pages = []
@@ -31,6 +32,7 @@ def get_page():
         selection = int(raw_input("Which page would you like?\n"))
     except:
         print "Not a number!"
+        sleep(2)
         __main__.restart()
     selection -= 1
     download(pages[selection])
