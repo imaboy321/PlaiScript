@@ -1,5 +1,5 @@
 #Modules
-import urllib, __main__,sys
+import urllib, __main__,os
 from time import sleep
 
 #Variables
@@ -37,3 +37,13 @@ def get_page():
     selection -= 1
     download(pages[selection])
 
+
+
+
+def main():
+    try:
+        os.stat(__main__.html_directory+"/"+str(__main__.current_date))
+        print "Already Here"
+    except:
+        os.mkdir(__main__.html_directory+"/"+str(__main__.current_date))
+        print "Created"

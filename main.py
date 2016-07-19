@@ -25,7 +25,16 @@ def cleanup():
     for cleanup_html in os.listdir(html_directory):
         if cleanup_html != "pages.txt":
             if cleanup_html != "last_checked.txt":
-                os.remove(html_directory+"/"+cleanup_html)
+                try:
+                    os.remove(html_directory+"/"+cleanup_html)
+                except WindowsError:
+                    try:
+                        os.rmdir(html_directory+"/"+cleanup_html)
+                    except WindowsError:
+                        for item in os.listdir(html_directory+"/"+cleanup_html):
+                            os.remove(html_directory+"/"+cleanup_html+"/"+item)
+                            print "Deleted", item
+                        os.rmdir(html_directory+"/"+cleanup_html)
                 print "Deleted ", cleanup_html
         else:
             pass
@@ -100,6 +109,8 @@ def main():
             cleanup()
         elif main_selection == 3:
             guide.main()
+        elif main_selection == 4:
+            downloader.main()
         else:
             print "Exiting..."
             sleep(2)
