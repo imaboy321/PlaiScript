@@ -1,6 +1,6 @@
 #Imports
 
-import sys, os, time, guide, downloader, html_parsing
+import sys, os, time, downloader, html_parsing
 from time import sleep
 
 
@@ -197,6 +197,13 @@ def update_check():
     html_update_check()
     print "Version: " + version + " " + versionName
 
+def dl_chkdir():
+    try:
+        os.stat(html_directory)
+    except:
+        os.mkdir(html_directory)
+
+
 
 #Main
 def main():
@@ -228,6 +235,7 @@ def main():
 
 if __name__ == '__main__':
     update_check()
+    dl_chkdir()
     app = QtGui.QApplication(sys.argv)
 
     select = MainWindow()

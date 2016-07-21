@@ -22,7 +22,7 @@ def html_file_list():
 #Main
 
 def main(html_file):
-    soup = BeautifulSoup(open(__main__.html_directory+"/"+html_file), "lxml")
+    soup = BeautifulSoup(open(__main__.html_directory+"/"+html_file))
     steps = str(soup.find("div", class_="wiki-body gollum-markdown-content instapaper_body"))
     step = steps.split("<li>")
     step = steps.split("\n")

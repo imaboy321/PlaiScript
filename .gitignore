@@ -223,3 +223,7 @@ pip-log.txt
 /html/3-(RedNAND).html
 /html/4-(2.1.0-Downgrade).html
 /html/5-(arm9loaderhax).html
+/setup.py
+/build/
+/dist/
+/msvcp90.dll
