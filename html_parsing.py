@@ -9,6 +9,15 @@ exludes = ['<h4>','<ul>','</li>','</div>','</ol>','</ul>','</img></br></li>', '<
            '</br></li>','<div class="wiki-body gollum-markdown-content instapaper_body" id="wiki-body">',
            '<div class="markdown-body">']
 steps_removed = []
+links = []
+
+#Functions
+def html_file_list():
+    for item in os.listdir(__main__.html_directory):
+        if item.endswith(".html"):
+            links.append(item)
+        else:
+            pass
 
 #Main
 

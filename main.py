@@ -1,12 +1,115 @@
 #Imports
 
-import sys, os, time, guide, downloader
+import sys, os, time, guide, downloader, html_parsing
 from time import sleep
+
+
+
+
+#PyQT Setup
+from PyQt4 import QtCore, QtGui
+
+from gui_main import Ui_Dialog
+from select import Ui_MainWindow
+
+#Main GUI Window
+
+class Dialog(QtGui.QMainWindow):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
+        self.ui.btnDownload.clicked.connect(self.btnDownload_clicked)
+        self.ui.btnCleanup.clicked.connect(cleanup)
+        self.ui.btnGuide.clicked.connect(self.btnGuide_parse)
+        self.ui.btnExit.clicked.connect(sys.exit)
+
+    def btnDownload_clicked(self):
+        global Main_Select, down_or_parse
+        if self.ui.chkAll.checkState() == 0:
+            main_gui.hide()
+            down_or_parse = 1
+            Main_Select = 'Which would you like to download?'
+            select.ui.txtHTML.setText(Main_Select)
+            select.show()
+        elif self.ui.chkAll.checkState() == 2:
+            downloader.get_all_pages()
+
+    def btnGuide_parse(self):
+        global Main_Select, down_or_parse
+        main_gui.hide()
+        down_or_parse = 2
+        Main_Select = 'Which would you like to parse?'
+        select.ui.txtHTML.setText(Main_Select)
+        select.show()
+
+
+
+#Selection Window
+
+class MainWindow(QtGui.QMainWindow):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.ui.btnSelectDone.clicked.connect(self.btnSelectDone)
+        self.ui.btnSelectExit.clicked.connect(self.btnSelectExit)
+
+    def btnSelectDone(self):
+        if down_or_parse == 1:
+            self.btnSelectDownload()
+        elif down_or_parse == 2:
+            self.btnSelectParse()
+
+    def btnSelectDownload(self):
+        downloader.page_list()
+
+        if self.ui.rdoHomebrew.isChecked():
+            downloader.download(downloader.pages[0])
+
+        elif self.ui.rdoDowngrade92.isChecked():
+            downloader.download(downloader.pages[1])
+
+        elif self.ui.rdoRedNAND.isChecked():
+            downloader.download(downloader.pages[2])
+
+        elif self.ui.rdoDowngrade21.isChecked():
+            downloader.download(downloader.pages[3])
+
+        elif self.ui.rdoArm9loaderhax.isChecked():
+            downloader.download(downloader.pages[4])
+        else:
+            pass
+
+    def btnSelectExit(self):
+        select.hide()
+        main_gui.show()
+
+    def btnSelectParse(self):
+        html_parsing.html_file_list()
+
+        if self.ui.rdoHomebrew.isChecked():
+            html_parsing.main(html_parsing.links[0])
+
+        elif self.ui.rdoDowngrade92.isChecked():
+            html_parsing.main(html_parsing.links[1])
+
+        elif self.ui.rdoRedNAND.isChecked():
+            html_parsing.main(html_parsing.links[2])
+
+        elif self.ui.rdoDowngrade21.isChecked():
+            html_parsing.main(html_parsing.links[3])
+
+        elif self.ui.rdoArm9loaderhax.isChecked():
+            html_parsing.main(html_parsing.links[4])
+
+        else:
+            pass
 
 #Base Variables
 
-version = "0.0.2"
-versionName = "The Basic Function One"
+version = "0.1"
+versionName = "Oh look a GUI!"
 html_directory = "html"
 html_pages = html_directory+"/pages.txt"
 html_directory_files = []
@@ -14,6 +117,7 @@ python = sys.executable
 current_date = time.localtime()
 current_date = [current_date[0], current_date[1], current_date[2]]
 last_checked_read = ""
+down_or_parse = 0
 
 #Functions
 
@@ -89,11 +193,14 @@ def select_download():
         print "Not a selection!"
         restart()
 
+def update_check():
+    html_update_check()
+    print "Version: " + version + " " + versionName
+
 
 #Main
 def main():
-    html_update_check()
-    print "Version: " + version + " " + versionName
+    update_check()
     while True:
         main_selection = raw_input(" \nSelection:\n" +
                                    "   1. Download html files \n   2. Cleanup Files \n"
@@ -120,4 +227,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    update_check()
+    app = QtGui.QApplication(sys.argv)
+
+    select = MainWindow()
+    main_gui = Dialog()
+    main_gui.show()
+    sys.exit(app.exec_())
