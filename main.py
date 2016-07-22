@@ -108,8 +108,8 @@ class MainWindow(QtGui.QMainWindow):
 
 #Base Variables
 
-version = "0.1"
-versionName = "Oh look a GUI!"
+version = "0.1.1"
+versionName = "Oh look a GUI! With Fix!"
 html_directory = "html"
 html_pages = html_directory+"/pages.txt"
 html_directory_files = []
