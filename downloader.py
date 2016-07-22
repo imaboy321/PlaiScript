@@ -8,8 +8,11 @@ from time import sleep
 pages = []
 selection = ""
 dowloader_select_text = "Which item would you like?"
+pagestxt_url = 'https://github.com/RedSoloFox/PlaiScript/releases/download/0.1/pages.txt'
 
 #Functions
+def get_pages():
+    urllib.urlretrieve(pagestxt_url, 'html/pages.txt')
 def page_list():
     page_text = open(__main__.html_pages, "r")
     number = 0
@@ -42,11 +45,3 @@ def get_page():
         __main__.restart()
     selection -= 1
     download(pages[selection])
-
-def dl_chkdir():
-    try:
-        os.stat(__main__.html_directory+"/"+str(__main__.current_date))
-        print "Already Here"
-    except:
-        os.mkdir(__main__.html_directory+"/"+str(__main__.current_date))
-        print "Created"

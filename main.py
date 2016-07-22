@@ -202,6 +202,7 @@ def dl_chkdir():
         os.stat(html_directory)
     except:
         os.mkdir(html_directory)
+        downloader.get_pages()
 
 
 
@@ -234,10 +235,9 @@ def main():
 
 
 if __name__ == '__main__':
-    update_check()
     dl_chkdir()
+    update_check()
     app = QtGui.QApplication(sys.argv)
-
     select = MainWindow()
     main_gui = Dialog()
     main_gui.show()
