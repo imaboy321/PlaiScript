@@ -26,6 +26,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(229, 211)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("Resources/Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayoutWidget = QtGui.QWidget(self.centralwidget)
@@ -50,6 +53,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.rdoArm9loaderhax)
         self.txtHTML = QtGui.QLineEdit(self.centralwidget)
         self.txtHTML.setGeometry(QtCore.QRect(10, 10, 211, 20))
+        self.txtHTML.setReadOnly(True)
         self.txtHTML.setObjectName(_fromUtf8("txtHTML"))
         self.btnSelectDone = QtGui.QPushButton(self.centralwidget)
         self.btnSelectDone.setGeometry(QtCore.QRect(150, 90, 75, 23))
@@ -63,7 +67,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Selection", None))
         self.rdoHomebrew.setText(_translate("MainWindow", "1. Homebrew", None))
         self.rdoDowngrade92.setText(_translate("MainWindow", "2. 9.2.0 Downgrade", None))
         self.rdoRedNAND.setText(_translate("MainWindow", "3. RedNAND", None))

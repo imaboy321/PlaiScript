@@ -1,5 +1,0 @@
-https://github.com/Plailect/Guide/wiki/Part-1-(Homebrew)
-https://github.com/Plailect/Guide/wiki/Part-2-(9.2.0-Downgrade)
-https://github.com/Plailect/Guide/wiki/Part-3-(RedNAND)
-https://github.com/Plailect/Guide/wiki/Part-4-(2.1.0-Downgrade)
-https://github.com/Plailect/Guide/wiki/Part-5-(arm9loaderhax)

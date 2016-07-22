@@ -1,18 +1,28 @@
-#Modules
+#########
+#Modules#
+#########
+
 import urllib, __main__,os,sys
 from time import sleep
 
 
+################
+#Base Variables#
+################
 
-#Variables
 pages = []
 selection = ""
 dowloader_select_text = "Which item would you like?"
-pagestxt_url = 'https://github.com/RedSoloFox/PlaiScript/releases/download/0.1/pages.txt'
+pagestxt_url = 'https://RedSoloFox.github.io/pages.txt'
+fox_icon_url = 'https://RedSoloFox.github.io/Fox.ico'
 
-#Functions
+###########
+#Functions#
+###########
+
 def get_pages():
-    urllib.urlretrieve(pagestxt_url, 'html/pages.txt')
+    urllib.urlretrieve(pagestxt_url, __main__.html_directory+'pages.txt')
+
 def page_list():
     page_text = open(__main__.html_pages, "r")
     number = 0
@@ -23,13 +33,13 @@ def download(page):
     stripped_link = page.strip("\n")
     urllib.urlretrieve(stripped_link, (__main__.html_directory + "/" +
                                        stripped_link.strip("https://github.com/Plailect/Guide/wiki/Part-") + ".html"))
-    print "downloaded", stripped_link.strip("https://github.com/Plailect/Guide/wiki/Part-")
+    return str('Downloaded '+stripped_link.strip("https://github.com/Plailect/Guide/wiki/Part-"))
 
 def get_all_pages():
     page_text = open(__main__.html_pages,'r')
     for link in page_text:
         download(link)
-    print "Done!"
+    return "Downloaded!"
 
 def get_page():
     global selection
@@ -45,3 +55,14 @@ def get_page():
         __main__.restart()
     selection -= 1
     download(pages[selection])
+
+def check_resources():
+    resources = os.listdir(__main__.html_directory)
+    if "Fox.ico" not in resources:
+        urllib.urlretrieve(fox_icon_url, __main__.html_directory+"Fox.ico")
+    else:
+        pass
+    if "pages.txt" not in resources:
+        urllib.urlretrieve(pagestxt_url, __main__.html_directory+'pages.txt')
+    else:
+        pass

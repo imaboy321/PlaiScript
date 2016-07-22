@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Selection</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Fox.ico</normaloff>Fox.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -69,6 +73,9 @@
       <width>211</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSelectDone">

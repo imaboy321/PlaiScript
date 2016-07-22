@@ -228,3 +228,6 @@ pip-log.txt
 /dist/
 /msvcp90.dll
 /main.spec
+/Resources/last_checked.txt
+/Resources/pages.txt
+/Resources/
