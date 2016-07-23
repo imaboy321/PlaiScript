@@ -39,7 +39,7 @@ def get_all_pages():
     page_text = open(__main__.html_pages,'r')
     for link in page_text:
         download(link)
-        print 'Downloaded',link
+        print 'Downloaded',link+'!'
     return "Downloaded!"
 
 def check_resources():
@@ -60,3 +60,25 @@ def check_resources():
         return 1
     else:
         return 0
+
+
+def cleanup(): #Removes most files and folders from html
+    clean_exclude = ['pages.txt','last_checked.txt', 'Fox.ico']
+    for cleanup_html in os.listdir(__main__.html_directory):
+        if cleanup_html not in clean_exclude:
+            try:
+                os.remove(__main__.html_directory+"/"+cleanup_html)
+                print cleanup_html, 'removed.'
+            except WindowsError:
+                try:
+                    os.rmdir(__main__.html_directory+"/"+cleanup_html)
+                    print 'Directory', cleanup_html , 'removed.'
+                except WindowsError:
+                    for item in os.listdir(__main__.html_directory+"/"+cleanup_html):
+                        os.remove(__main__.html_directory+"/"+cleanup_html+"/"+item)
+                        print item, 'removed.'
+                    os.rmdir(__main__.html_directory+"/"+cleanup_html)
+                    print "Directory", cleanup_html , 'removed.'
+        else:
+            pass
+    __main__.main_gui.ui.txtUpdateCheck.setText("Cleaned!")

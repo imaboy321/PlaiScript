@@ -2,16 +2,16 @@
 #Modules#
 #########
 
-import sys, os, time, file_management, html_parsing
-from time import sleep
+import file_management
+import html_parsing
+import os
+import sys
+import time
 
-############
-#PyQT Setup#
-############
 from PyQt4 import QtCore, QtGui
 from gui.gui_main import Ui_Dialog
-from gui.select import Ui_MainWindow
 from gui.parsed import Ui_ParseWindow
+from gui.select import Ui_MainWindow
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -67,7 +67,7 @@ class Dialog(QtGui.QMainWindow):
 
     def btnCleanup(self):
         print 'btnCleanup'
-        cleanup()
+        file_management.cleanup()
 
     def btnExit(self):
         print 'btnExit'
@@ -97,21 +97,25 @@ class MainWindow(QtGui.QMainWindow):
         file_management.page_list()
 
         if self.ui.rdoHomebrew.isChecked():
-            self.ui.txtHTML.setText(file_management.download(file_management.pages[0]))
+            self.btnSelectDownload_downloading(file_management.pages[0])
 
         elif self.ui.rdoDowngrade92.isChecked():
-            self.ui.txtHTML.setText(file_management.download(file_management.pages[1]))
+            self.btnSelectDownload_downloading(file_management.pages[1])
 
         elif self.ui.rdoRedNAND.isChecked():
-            self.ui.txtHTML.setText(file_management.download(file_management.pages[2]))
+            self.btnSelectDownload_downloading(file_management.pages[2])
 
         elif self.ui.rdoDowngrade21.isChecked():
-            self.ui.txtHTML.setText(file_management.download(file_management.pages[3]))
+            self.btnSelectDownload_downloading(file_management.pages[3])
 
         elif self.ui.rdoArm9loaderhax.isChecked():
-            self.ui.txtHTML.setText(file_management.download(file_management.pages[4]))
+            self.btnSelectDownload_downloading(file_management.pages[4])
         else:
             pass
+
+    def btnSelectDownload_downloading(self, page): #downloading and setting of txtHTML
+        text = file_management.download(page)
+        self.ui.txtHTML.setText(text)
 
     def btnSelectExit(self):
         print 'btnSelectExit'
@@ -208,27 +212,6 @@ fox_icon = 'Resources/Fox.ico'
 #Functions#
 ###########
 
-def cleanup(): #Removes most files and folders from html
-    clean_exclude = ['pages.txt','last_checked.txt', 'Fox.ico']
-    for cleanup_html in os.listdir(html_directory):
-        if cleanup_html not in clean_exclude:
-            try:
-                os.remove(html_directory+"/"+cleanup_html)
-                print cleanup_html, 'removed.'
-            except WindowsError:
-                try:
-                    os.rmdir(html_directory+"/"+cleanup_html)
-                    print 'Directory', cleanup_html , 'removed.'
-                except WindowsError:
-                    for item in os.listdir(html_directory+"/"+cleanup_html):
-                        os.remove(html_directory+"/"+cleanup_html+"/"+item)
-                        print item, 'removed.'
-                    os.rmdir(html_directory+"/"+cleanup_html)
-                    print "Directory", cleanup_html , 'removed.'
-        else:
-            pass
-    main_gui.ui.txtUpdateCheck.setText("Cleaned!")
-
 def date_check(): #Returns True if same as last checked and False if different
     global last_checked_read, update_check
     current_date = time.localtime()
@@ -311,5 +294,4 @@ if __name__ == '__main__':
     set_ver()
     set_icons()
     main_gui.show()
-
     sys.exit(app.exec_())
