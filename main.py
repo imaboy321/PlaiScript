@@ -47,11 +47,11 @@ class Dialog(QtGui.QMainWindow):
         global Main_Select, down_or_parse
         if self.ui.chkAll.checkState() == 0:
             print 'btnDownload'
-            main_gui.hide()
             down_or_parse = 1
             Main_Select = 'Which would you like to download?'
             select.ui.txtHTML.setText(Main_Select)
             select.show()
+            main_gui.hide()
         elif self.ui.chkAll.checkState() == 2:
             print 'btnDownload -All'
             self.ui.txtUpdateCheck.setText(file_management.get_all_pages())
@@ -59,11 +59,11 @@ class Dialog(QtGui.QMainWindow):
     def btnGuide_parse(self):
         print 'btnGuide'
         global Main_Select, down_or_parse
-        main_gui.hide()
         down_or_parse = 2
         Main_Select = 'Which would you like to view?'
         select.ui.txtHTML.setText(Main_Select)
         select.show()
+        main_gui.hide()
 
     def btnCleanup(self):
         print 'btnCleanup'
@@ -123,8 +123,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def btnSelectExit(self):
         print 'btnSelectExit'
-        select.hide()
         main_gui.show()
+        select.hide()
 
     def btnSelectParse(self):
         print 'btnSelectParse'
@@ -163,8 +163,8 @@ class MainWindow(QtGui.QMainWindow):
             parsed.ui.txtPageOf.setText('1')
             parsed.ui.txtPageMax.setText(str(len(html_parsing.steps_removed) - 1))
             parsed.number = 0
-            select.hide()
             parsed.show()
+            select.hide()
         except IOError:
             self.ui.txtHTML.setText(str(file+' does not exist!'))
             parsed.number = 0
@@ -188,8 +188,8 @@ class ParsedWindow(QtGui.QMainWindow):
         print 'btnParsedExit'
         self.ui.txtPageOf.setText('')
         self.ui.txtPageMax.setText('')
-        parsed.hide()
         select.show()
+        parsed.hide()
 
     def btnParsedNext(self):
         print 'btnParsedNext'
