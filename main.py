@@ -2,7 +2,7 @@
 #Modules#
 #########
 
-import sys, os, time, downloader, html_parsing
+import sys, os, time, file_management, html_parsing
 from time import sleep
 
 ############
@@ -12,12 +12,12 @@ from PyQt4 import QtCore, QtGui
 from gui.gui_main import Ui_Dialog
 from gui.select import Ui_MainWindow
 from gui.parsed import Ui_ParseWindow
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
     def _fromUtf8(s):
         return s
-
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
@@ -39,28 +39,39 @@ class Dialog(QtGui.QMainWindow):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.btnDownload.clicked.connect(self.btnDownload_clicked)
-        self.ui.btnCleanup.clicked.connect(cleanup)
+        self.ui.btnCleanup.clicked.connect(self.btnCleanup)
         self.ui.btnGuide.clicked.connect(self.btnGuide_parse)
-        self.ui.btnExit.clicked.connect(sys.exit)
+        self.ui.btnExit.clicked.connect(self.btnExit)
 
     def btnDownload_clicked(self):
         global Main_Select, down_or_parse
         if self.ui.chkAll.checkState() == 0:
+            print 'btnDownload'
             main_gui.hide()
             down_or_parse = 1
             Main_Select = 'Which would you like to download?'
             select.ui.txtHTML.setText(Main_Select)
             select.show()
         elif self.ui.chkAll.checkState() == 2:
-            self.ui.txtUpdateCheck.setText(downloader.get_all_pages())
+            print 'btnDownload -All'
+            self.ui.txtUpdateCheck.setText(file_management.get_all_pages())
 
     def btnGuide_parse(self):
+        print 'btnGuide'
         global Main_Select, down_or_parse
         main_gui.hide()
         down_or_parse = 2
         Main_Select = 'Which would you like to view?'
         select.ui.txtHTML.setText(Main_Select)
         select.show()
+
+    def btnCleanup(self):
+        print 'btnCleanup'
+        cleanup()
+
+    def btnExit(self):
+        print 'btnExit'
+        sys.exit()
 
 ##################
 #Selection Window#
@@ -75,36 +86,40 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.btnSelectExit.clicked.connect(self.btnSelectExit)
 
     def btnSelectDone(self):
+        print 'btnSelectDone'
         if down_or_parse == 1:
             self.btnSelectDownload()
         elif down_or_parse == 2:
             self.btnSelectParse()
 
     def btnSelectDownload(self):
-        downloader.page_list()
+        print 'btnSelectDone -Download'
+        file_management.page_list()
 
         if self.ui.rdoHomebrew.isChecked():
-            self.ui.txtHTML.setText(downloader.download(downloader.pages[0]))
+            self.ui.txtHTML.setText(file_management.download(file_management.pages[0]))
 
         elif self.ui.rdoDowngrade92.isChecked():
-            self.ui.txtHTML.setText(downloader.download(downloader.pages[1]))
+            self.ui.txtHTML.setText(file_management.download(file_management.pages[1]))
 
         elif self.ui.rdoRedNAND.isChecked():
-            self.ui.txtHTML.setText(downloader.download(downloader.pages[2]))
+            self.ui.txtHTML.setText(file_management.download(file_management.pages[2]))
 
         elif self.ui.rdoDowngrade21.isChecked():
-            self.ui.txtHTML.setText(downloader.download(downloader.pages[3]))
+            self.ui.txtHTML.setText(file_management.download(file_management.pages[3]))
 
         elif self.ui.rdoArm9loaderhax.isChecked():
-            self.ui.txtHTML.setText(downloader.download(downloader.pages[4]))
+            self.ui.txtHTML.setText(file_management.download(file_management.pages[4]))
         else:
             pass
 
     def btnSelectExit(self):
+        print 'btnSelectExit'
         select.hide()
         main_gui.show()
 
     def btnSelectParse(self):
+        print 'btnSelectParse'
         html_parsing.steps_removed_stripped = []
         html_parsing.html_file_list()
         if self.ui.rdoHomebrew.isChecked():
@@ -133,6 +148,7 @@ class MainWindow(QtGui.QMainWindow):
         parsed.ui.txtParsed.setText(html_parsing.steps_removed[0])
         parsed.ui.txtPageOf.setText('1')
         parsed.ui.txtPageMax.setText(str(len(html_parsing.steps_removed)-1))
+        parsed.number = 0
         select.hide()
         parsed.show()
 
@@ -151,53 +167,64 @@ class ParsedWindow(QtGui.QMainWindow):
         self.number = 0
 
     def btnParsedExit(self):
+        print 'btnParsedExit'
+        self.ui.txtPageOf.setText('')
+        self.ui.txtPageMax.setText('')
         parsed.hide()
         select.show()
 
     def btnParsedNext(self):
+        print 'btnParsedNext'
         if self.number+1 < len(html_parsing.steps_removed)-1:
             self.number += 1
+            print self.number
             self.ui.txtParsed.setText(html_parsing.steps_removed[self.number])
             self.ui.txtPageOf.setText(str(self.number+1))
         else:
-            print "Nope"
+            print "Above len(html_parsing.steps_removed)"
 
     def btnParsedPrevious(self):
+        print 'btnParsedPrevious'
         if self.number-1 >= 0:
             self.number-=1
+            print self.number
             self.ui.txtParsed.setText(html_parsing.steps_removed[self.number])
             self.ui.txtPageOf.setText(str(self.number+1))
         else:
-            print "Nope"
+            print 'Below 0'
 
 ################
 #Base Variables#
 ################
 
-version = ['1.0', 'Completely Usable!']
+version = ['Version = 1.0', 'First Release!']
 html_directory = "Resources/"
 html_pages = html_directory+"/pages.txt"
 down_or_parse = 0
 update_check = ''
+fox_icon = 'Resources/Fox.ico'
 
 ###########
 #Functions#
 ###########
 
 def cleanup(): #Removes most files and folders from html
+    clean_exclude = ['pages.txt','last_checked.txt', 'Fox.ico']
     for cleanup_html in os.listdir(html_directory):
-        if cleanup_html != "pages.txt":
-            if cleanup_html != "last_checked.txt":
+        if cleanup_html not in clean_exclude:
+            try:
+                os.remove(html_directory+"/"+cleanup_html)
+                print cleanup_html, 'removed.'
+            except WindowsError:
                 try:
-                    os.remove(html_directory+"/"+cleanup_html)
+                    os.rmdir(html_directory+"/"+cleanup_html)
+                    print 'Directory', cleanup_html , 'removed.'
                 except WindowsError:
-                    try:
-                        os.rmdir(html_directory+"/"+cleanup_html)
-                    except WindowsError:
-                        for item in os.listdir(html_directory+"/"+cleanup_html):
-                            os.remove(html_directory+"/"+cleanup_html+"/"+item)
-                            print "Deleted", item
-                        os.rmdir(html_directory+"/"+cleanup_html)
+                    for item in os.listdir(html_directory+"/"+cleanup_html):
+                        os.remove(html_directory+"/"+cleanup_html+"/"+item)
+                        print item, 'removed.'
+                    os.rmdir(html_directory+"/"+cleanup_html)
+                    print "Directory", cleanup_html , 'removed.'
         else:
             pass
     main_gui.ui.txtUpdateCheck.setText("Cleaned!")
@@ -208,31 +235,68 @@ def date_check(): #Returns True if same as last checked and False if different
     current_date = [current_date[0], current_date[1], current_date[2]]
     try:
         last_checked = open(html_directory+'last_checked.txt', 'r+')
+        print "last_check exists"
         try:
             last_checked = [int(x) for x in ((last_checked.read()).strip("[]")).split(",")]
+            print 'last_checked setup'
         except ValueError:
+            print 'No former date'
             last_checked = ['Never', 'Never', 'Never']
         if current_date == last_checked:
             update_check = "Last check was today! {0}-{1}-{2}".format(last_checked[1],
                                                              last_checked[2],
                                                              last_checked[0])
+            print 'Last check = Today'
         else:
             update_check = "Last check {0}-{1}-{2}".format(last_checked[1], last_checked[2], last_checked[0])
             last_checked = open(html_directory+'last_checked.txt', 'r+')
+            print 'File Reopened'
             last_checked.write(str(current_date))
+            print 'File Written To'
             last_checked.close()
+            print 'File Closed'
     except IOError:
+        print 'last_checked does not exist'
         last_checked = open(html_directory+'last_checked.txt', 'w+')
+        print 'File created'
         last_checked.write(str(current_date))
+        print 'File written to'
         last_checked.close()
+        print 'File Closed'
 
 def dl_chkdir():
     try:
         os.stat(html_directory)
+        print 'Directory Exists'
     except:
         os.mkdir(html_directory)
+        print 'Directory does not exist, created.'
     finally:
-        downloader.check_resources()
+        return file_management.check_resources()
+
+def set_main_gui_up():
+    global main_gui
+    if dl_chkdir() == 1:
+        main_gui = Dialog()
+        date_check()
+        main_gui.ui.txtUpdateCheck.setText('Thanks for downloading!')
+    else:
+        main_gui = Dialog()
+        date_check()
+        main_gui.ui.txtUpdateCheck.setText(update_check)
+
+def set_ver():
+    global main_gui
+    main_gui.ui.txtVersionName.setText('<p style="text-align: center;">{0}</p>'.format(version[1]))
+    main_gui.ui.txtVersionNumber.setText('<p style="text-align: center;">{0}</p>'.format(version[0]))
+
+def set_icons(): #Sets Icons from outside their respective files, since it gets reset with every change.
+    global main_gui, select, parsed
+    icon = QtGui.QIcon()
+    icon.addPixmap(QtGui.QPixmap(_fromUtf8(fox_icon)), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+    main_gui.setWindowIcon(icon)
+    select.setWindowIcon(icon)
+    parsed.setWindowIcon(icon)
 
 
 ############
@@ -240,16 +304,12 @@ def dl_chkdir():
 ############
 
 if __name__ == '__main__':
-    dl_chkdir()
-    date_check()
     app = QtGui.QApplication(sys.argv)
-
+    set_main_gui_up()
     select = MainWindow()
-    main_gui = Dialog()
     parsed = ParsedWindow()
-    main_gui.ui.txtVersionName.setText(version[1])
-    main_gui.ui.txtVersionNumber.setText('Version='+version[0])
-    main_gui.ui.txtUpdateCheck.setText(update_check)
+    set_ver()
+    set_icons()
     main_gui.show()
 
     sys.exit(app.exec_())

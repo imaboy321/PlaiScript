@@ -27,7 +27,7 @@ class Ui_ParseWindow(object):
         ParseWindow.setObjectName(_fromUtf8("ParseWindow"))
         ParseWindow.resize(861, 391)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("Resources/Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ParseWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(ParseWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))

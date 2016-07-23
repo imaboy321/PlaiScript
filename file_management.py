@@ -39,30 +39,24 @@ def get_all_pages():
     page_text = open(__main__.html_pages,'r')
     for link in page_text:
         download(link)
+        print 'Downloaded',link
     return "Downloaded!"
 
-def get_page():
-    global selection
-    for item in range(len(pages)):
-        print "["+str(number+1)+"]",pages[number]
-        number += 1
-    try:
-        global selection
-        selection = int(raw_input("Which page would you like?\n"))
-    except:
-        print "Not a number!"
-        sleep(2)
-        __main__.restart()
-    selection -= 1
-    download(pages[selection])
-
 def check_resources():
+    Fox, Pages = 0, 0
     resources = os.listdir(__main__.html_directory)
     if "Fox.ico" not in resources:
         urllib.urlretrieve(fox_icon_url, __main__.html_directory+"Fox.ico")
+        Fox = 1
     else:
         pass
     if "pages.txt" not in resources:
         urllib.urlretrieve(pagestxt_url, __main__.html_directory+'pages.txt')
+        Pages = 1
     else:
         pass
+    print 'All files accounted for, sir!'
+    if Fox == 1 and Pages == 1:
+        return 1
+    else:
+        return 0

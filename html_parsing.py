@@ -13,7 +13,7 @@ exludes = ['<h4>','<ul>','</li>','</div>','</ol>','</ul>','</img></br></li>', '<
            '</br></li>','<div class="wiki-body gollum-markdown-content instapaper_body" id="wiki-body">',
            '<div class="markdown-body">',
            '<div class="wiki-footer gollum-markdown-content boxed-group" id="wiki-footer">',
-           '<div class="boxed-group-inner wiki-auxiliary-content markdown-body">']
+           '<div class="boxed-group-inner wiki-auxiliary-content markdown-body">', '<hr/>', '~<br/>', '<h5>', '\n', '']
 steps_removed = []
 links = []
 
@@ -31,12 +31,17 @@ def html_file_list():
 
 def parse(html_file):
     del steps_removed[:]
+    print 'Cleared steps_removed'
     soup = BeautifulSoup(open(__main__.html_directory+"/"+html_file), "lxml")
+    print 'BS4'
     steps = str(soup.find("div", class_="wiki-body gollum-markdown-content instapaper_body"))
+    print 'Soup Fine'
     step = steps.split("\n")
+    print 'Split'
 
     for item in step:
         if item not in exludes:
-            steps_removed.append(item)
+            steps_removed.append(item.strip('\n'))
+            print item+'\n'
         else:
             pass
