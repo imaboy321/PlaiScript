@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>229</width>
-    <height>211</height>
+    <width>228</width>
+    <height>213</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>131</width>
+      <width>141</width>
       <height>181</height>
      </rect>
     </property>
@@ -63,6 +63,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QRadioButton" name="rdoDSiWareDowngrade">
+       <property name="text">
+        <string>DSiWare Downgrade</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QLineEdit" name="txtHTML">
@@ -78,31 +85,31 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnSelectDone">
+   <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>90</y>
-      <width>75</width>
-      <height>23</height>
+      <x>140</x>
+      <y>130</y>
+      <width>81</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Confirm</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnSelectExit">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>120</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Exit</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btnSelectDone">
+       <property name="text">
+        <string>Confirm</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSelectExit">
+       <property name="text">
+        <string>Exit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

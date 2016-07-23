@@ -23,7 +23,7 @@ files = ['Part-1-(Homebrew).html',
          'Part-3-(RedNAND).html',
          'Part-4-(2.1.0-Downgrade).html',
          'Part-5-(arm9loaderhax).html',
-         'DSiWare-Downgrade']
+         'DSiWare-Downgrade.html']
 
 #Functions
 def html_file_list():

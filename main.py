@@ -110,6 +110,10 @@ class MainWindow(QtGui.QMainWindow):
 
         elif self.ui.rdoArm9loaderhax.isChecked():
             self.btnSelectDownload_downloading(file_management.pages[4])
+
+        elif self.ui.rdoDSiWareDowngrade.isChecked():
+            self.btnSelectDownload_downloading(file_management.pages[5])
+
         else:
             pass
 
@@ -144,22 +148,26 @@ class MainWindow(QtGui.QMainWindow):
         elif self.ui.rdoArm9loaderhax.isChecked():
             self.btnSelectParsed_parse(html_parsing.files[4])
             parsed.setWindowTitle(_translate("5: arm9loaderhax", "5: arm9loaderhax", None))
+
+        elif self.ui.rdoDSiWareDowngrade.isChecked():
+            self.btnSelectParsed_parse(html_parsing.files[5])
+            parsed.setWindowTitle(_translate('DSiWare Downgrade', "DSiWare Downgrade", None))
         else:
             pass
 
     def btnSelectParsed_parse(self, file):
         try:
-            print '1'
             html_parsing.parse(file)
-            print '2'
-            parsed.ui.txtParsed.setText(html_parsing.files[0])
+            print
+            parsed.ui.txtParsed.setText(html_parsing.steps_removed[0])
             parsed.ui.txtPageOf.setText('1')
-            parsed.ui.txtPageMax.setText(str(len(html_parsing.files) - 1))
+            parsed.ui.txtPageMax.setText(str(len(html_parsing.steps_removed) - 1))
             parsed.number = 0
             select.hide()
             parsed.show()
         except IOError:
             self.ui.txtHTML.setText(str(file+' does not exist!'))
+            parsed.number = 0
 
 ###############
 #Parsed Window#
@@ -173,6 +181,7 @@ class ParsedWindow(QtGui.QMainWindow):
         self.ui.btnParsedExit.clicked.connect(self.btnParsedExit)
         self.ui.btnParsedNext.clicked.connect(self.btnParsedNext)
         self.ui.btnParsePrevious.clicked.connect(self.btnParsedPrevious)
+        self.ui.btnParsedReset.clicked.connect(self.btnParsedReset)
         self.number = 0
 
     def btnParsedExit(self):
@@ -201,6 +210,13 @@ class ParsedWindow(QtGui.QMainWindow):
             self.ui.txtPageOf.setText(str(self.number+1))
         else:
             print 'Below 0'
+
+    def btnParsedReset(self):
+        print 'btnParsedReset'
+        self.ui.txtParsed.setText(html_parsing.steps_removed[0])
+        self.number = 0
+        self.ui.txtPageOf.setText('1')
+        print self.number
 
 ################
 #Base Variables#
