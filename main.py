@@ -43,6 +43,14 @@ class Dialog(QtGui.QMainWindow):
         self.ui.btnGuide.clicked.connect(self.btnGuide_parse)
         self.ui.btnExit.clicked.connect(self.btnExit)
 
+        self.tray_icon = QtGui.QSystemTrayIcon()
+        self.tray_icon.setIcon(icon)
+        self.tray_icon.show()
+
+        self.menu = QtGui.QMenu()
+        self.menu.addAction("Exit", sys.exit)
+        self.tray_icon.setContextMenu(self.menu)
+
     def btnDownload_clicked(self):
         global Main_Select, down_or_parse
         if self.ui.chkAll.checkState() == 0:
@@ -50,8 +58,8 @@ class Dialog(QtGui.QMainWindow):
             down_or_parse = 1
             Main_Select = 'Which would you like to download?'
             select.ui.txtHTML.setText(Main_Select)
+            self.hide()
             select.show()
-            main_gui.hide()
         elif self.ui.chkAll.checkState() == 2:
             print 'btnDownload -All'
             self.ui.txtUpdateCheck.setText(file_management.get_all_pages())
@@ -62,8 +70,8 @@ class Dialog(QtGui.QMainWindow):
         down_or_parse = 2
         Main_Select = 'Which would you like to view?'
         select.ui.txtHTML.setText(Main_Select)
+        self.hide()
         select.show()
-        main_gui.hide()
 
     def btnCleanup(self):
         print 'btnCleanup'
@@ -123,8 +131,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def btnSelectExit(self):
         print 'btnSelectExit'
+        self.hide()
         main_gui.show()
-        select.hide()
 
     def btnSelectParse(self):
         print 'btnSelectParse'
@@ -163,8 +171,8 @@ class MainWindow(QtGui.QMainWindow):
             parsed.ui.txtPageOf.setText('1')
             parsed.ui.txtPageMax.setText(str(len(html_parsing.steps_removed) - 1))
             parsed.number = 0
+            self.hide()
             parsed.show()
-            select.hide()
         except IOError:
             self.ui.txtHTML.setText(str(file+' does not exist!'))
             parsed.number = 0
@@ -188,8 +196,8 @@ class ParsedWindow(QtGui.QMainWindow):
         print 'btnParsedExit'
         self.ui.txtPageOf.setText('')
         self.ui.txtPageMax.setText('')
+        self.hide()
         select.show()
-        parsed.hide()
 
     def btnParsedNext(self):
         print 'btnParsedNext'
@@ -268,7 +276,7 @@ def date_check(): #Returns True if same as last checked and False if different
         last_checked.close()
         print 'File Closed'
 
-def dl_chkdir():
+def dl_chkdir():  #Checks if Resources exists and creates if not, then makes sure fox.ico and pages.txt are downloaded
     try:
         os.stat(html_directory)
         print 'Directory Exists'
@@ -278,8 +286,8 @@ def dl_chkdir():
     finally:
         return file_management.check_resources()
 
-def set_main_gui_up():
-    global main_gui
+def set_main_gui_up():  #if new install, thanks user for downloading
+    global main_gui, icon
     if dl_chkdir() == 1:
         main_gui = Dialog()
         date_check()
@@ -289,18 +297,21 @@ def set_main_gui_up():
         date_check()
         main_gui.ui.txtUpdateCheck.setText(update_check)
 
-def set_ver():
+def set_ver():  #Sets version text inside info tab
     global main_gui
     main_gui.ui.txtVersionName.setText('<p style="text-align: center;">{0}</p>'.format(version[1]))
     main_gui.ui.txtVersionNumber.setText('<p style="text-align: center;">{0}</p>'.format(version[0]))
 
-def set_icons(): #Sets Icons from outside their respective files, since it gets reset with every change.
-    global main_gui, select, parsed
+def set_icons():  #Sets Icons from outside their respective files, since it gets reset with every change.
+    global main_gui, select, parsed, icon
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(_fromUtf8(fox_icon)), QtGui.QIcon.Normal, QtGui.QIcon.Off)
     main_gui.setWindowIcon(icon)
+    print "Set main icon"
     select.setWindowIcon(icon)
+    print 'Set select icon'
     parsed.setWindowIcon(icon)
+    print 'Set parsed icon'
 
 
 ############
@@ -309,6 +320,8 @@ def set_icons(): #Sets Icons from outside their respective files, since it gets 
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
+    icon = QtGui.QIcon()
+    icon.addPixmap(QtGui.QPixmap(_fromUtf8(fox_icon)), QtGui.QIcon.Normal, QtGui.QIcon.Off)
     set_main_gui_up()
     select = MainWindow()
     parsed = ParsedWindow()
