@@ -8,14 +8,22 @@ import os,__main__
 ###########
 #Variables#
 ###########
+steps_removed = []
 
 exludes = ['<h4>','<ul>','</li>','</div>','</ol>','</ul>','</img></br></li>', '<ol>', '<li>',
            '</br></li>','<div class="wiki-body gollum-markdown-content instapaper_body" id="wiki-body">',
            '<div class="markdown-body">',
            '<div class="wiki-footer gollum-markdown-content boxed-group" id="wiki-footer">',
-           '<div class="boxed-group-inner wiki-auxiliary-content markdown-body">', '<hr/>', '~<br/>', '<h5>', '\n', '']
-steps_removed = []
-links = []
+           '<div class="boxed-group-inner wiki-auxiliary-content markdown-body">',
+           '<hr/>', '~<br/>', '<h5>', '\n', '']
+
+
+files = ['Part-1-(Homebrew).html',
+         'Part-2-(9.2.0-Downgrade).html',
+         'Part-3-(RedNAND).html',
+         'Part-4-(2.1.0-Downgrade).html',
+         'Part-5-(arm9loaderhax).html',
+         'DSiWare-Downgrade']
 
 #Functions
 def html_file_list():
@@ -32,10 +40,10 @@ def html_file_list():
 def parse(html_file):
     del steps_removed[:]
     print 'Cleared steps_removed'
-    soup = BeautifulSoup(open(__main__.html_directory+"/"+html_file), "lxml")
+    soup = BeautifulSoup(open(__main__.html_directory+html_file), "lxml")
     print 'BS4'
     steps = str(soup.find("div", class_="wiki-body gollum-markdown-content instapaper_body"))
-    print 'Soup Fine'
+    print 'Soup Find'
     step = steps.split("\n")
     print 'Split'
 

@@ -124,37 +124,42 @@ class MainWindow(QtGui.QMainWindow):
 
     def btnSelectParse(self):
         print 'btnSelectParse'
-        html_parsing.steps_removed_stripped = []
         html_parsing.html_file_list()
         if self.ui.rdoHomebrew.isChecked():
-            html_parsing.parse(html_parsing.links[0])
+            self.btnSelectParsed_parse(html_parsing.files[0])
             parsed.setWindowTitle(_translate("1: Homebrew", "1: Homebrew", None))
 
         elif self.ui.rdoDowngrade92.isChecked():
-            html_parsing.parse(html_parsing.links[1])
+            self.btnSelectParsed_parse(html_parsing.files[1])
             parsed.setWindowTitle(_translate("2: 9.2 Downgrade", "2: 9.2 Downgrade", None))
 
         elif self.ui.rdoRedNAND.isChecked():
-            html_parsing.parse(html_parsing.links[2])
+            self.btnSelectParsed_parse(html_parsing.files[2])
             parsed.setWindowTitle(_translate("3: RedNAND", "3: RedNAND", None))
 
         elif self.ui.rdoDowngrade21.isChecked():
-            html_parsing.parse(html_parsing.links[3])
+            self.btnSelectParsed_parse(html_parsing.files[3])
             parsed.setWindowTitle(_translate("4: 2.1 Downgrade", "4: 2.1 Downgrade", None))
 
         elif self.ui.rdoArm9loaderhax.isChecked():
-            html_parsing.parse(html_parsing.links[4])
+            self.btnSelectParsed_parse(html_parsing.files[4])
             parsed.setWindowTitle(_translate("5: arm9loaderhax", "5: arm9loaderhax", None))
-
         else:
             pass
 
-        parsed.ui.txtParsed.setText(html_parsing.steps_removed[0])
-        parsed.ui.txtPageOf.setText('1')
-        parsed.ui.txtPageMax.setText(str(len(html_parsing.steps_removed)-1))
-        parsed.number = 0
-        select.hide()
-        parsed.show()
+    def btnSelectParsed_parse(self, file):
+        try:
+            print '1'
+            html_parsing.parse(file)
+            print '2'
+            parsed.ui.txtParsed.setText(html_parsing.files[0])
+            parsed.ui.txtPageOf.setText('1')
+            parsed.ui.txtPageMax.setText(str(len(html_parsing.files) - 1))
+            parsed.number = 0
+            select.hide()
+            parsed.show()
+        except IOError:
+            self.ui.txtHTML.setText(str(file+' does not exist!'))
 
 ###############
 #Parsed Window#

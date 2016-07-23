@@ -1,18 +1,30 @@
 # PlaiScript
-Easy Script For Plailect's Guide
+Python helper for Plailect's guide
 
 Plailect's Guide -> https://github.com/Plailect/Guide/wiki
 
-The proposed purpose of this Python based guide is to help users better understand the guide while providing an easy way of downloading and copying the files at essential steps.
+The purpose of this helper is to keep a copy of the guide and show relevant information from those copies.
 
-Current Features:
-    Downloading of the HTML files which links are in html/pages.txt
+##Current Features:
+    Downloading of the HTML files from pages.txt
     Cleanup of files
     Date checking for updates
-    Basic parsing
+    Base GUI
 
-Proposed features:
-    more advanced html parsing to get current guide steps
-    Complete GUI
+####Proposed features:
+    File Helper (Downloading of zips and copying to sd card)
+    Threading
+    Seperate files to dated folders
+    Mac executable
 
-**THIS IS NOW USABLE. YOU CAN MANUALLY UPDATE THE FILES FROM WITHIN THE SCRIPT AND IT WILL DISPLAY ALL THE RELEVANT INFORMATION FOR YOU**
+####Instructions:
+    From exe:
+        1. Download from Releases tab
+        2. Have an internet connection
+        3. Run PlaiScript.exe
+    
+    From source:
+        1. Donwload source
+        2. Install dependencies w/ python 2.7
+        3. Have an internet connection
+        4. Run main.py
