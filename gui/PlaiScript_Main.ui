@@ -32,8 +32,8 @@
    <string>PlaiScript</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Fox.ico</normaloff>Fox.ico</iconset>
+   <iconset resource="../PlaiScript.qrc">
+    <normaloff>:/Resources/Resources/Fox.ico</normaloff>:/Resources/Resources/Fox.ico</iconset>
   </property>
   <property name="toolTip">
    <string/>
@@ -218,6 +218,8 @@ p, li { white-space: pre-wrap; }
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../PlaiScript.qrc"/>
+ </resources>
  <connections/>
 </ui>

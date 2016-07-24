@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(228, 213)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/Resources/Resources/Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -85,3 +85,4 @@ class Ui_MainWindow(object):
         self.btnSelectDone.setText(_translate("MainWindow", "Confirm", None))
         self.btnSelectExit.setText(_translate("MainWindow", "Exit", None))
 
+import PlaiScript_rc

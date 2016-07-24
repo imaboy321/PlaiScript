@@ -14,8 +14,8 @@
    <string>Selection</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Fox.ico</normaloff>Fox.ico</iconset>
+   <iconset resource="../PlaiScript.qrc">
+    <normaloff>:/Resources/Resources/Fox.ico</normaloff>:/Resources/Resources/Fox.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -113,6 +113,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../PlaiScript.qrc"/>
+ </resources>
  <connections/>
 </ui>

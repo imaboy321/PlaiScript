@@ -7,6 +7,7 @@ import html_parsing
 import os
 import sys
 import time
+import PlaiScript_rc
 
 from PyQt4 import QtCore, QtGui
 from gui.gui_main import Ui_Dialog
@@ -230,7 +231,7 @@ class ParsedWindow(QtGui.QMainWindow):
 #Base Variables#
 ################
 
-version = ['Version = 1.0', 'First Release!']
+version = ['Version = 1.0.1', 'Bug fix...']
 html_directory = "Resources/"
 html_pages = html_directory+"/pages.txt"
 down_or_parse = 0
@@ -301,7 +302,7 @@ def set_ver():  #Sets version text inside info tab
     global main_gui
     main_gui.ui.txtVersionName.setText('<p style="text-align: center;">{0}</p>'.format(version[1]))
     main_gui.ui.txtVersionNumber.setText('<p style="text-align: center;">{0}</p>'.format(version[0]))
-
+'''
 def set_icons():  #Sets Icons from outside their respective files, since it gets reset with every change.
     global main_gui, select, parsed, icon
     icon = QtGui.QIcon()
@@ -312,6 +313,7 @@ def set_icons():  #Sets Icons from outside their respective files, since it gets
     print 'Set select icon'
     parsed.setWindowIcon(icon)
     print 'Set parsed icon'
+'''
 
 
 ############
@@ -326,6 +328,6 @@ if __name__ == '__main__':
     select = MainWindow()
     parsed = ParsedWindow()
     set_ver()
-    set_icons()
+    #set_icons()
     main_gui.show()
     sys.exit(app.exec_())
