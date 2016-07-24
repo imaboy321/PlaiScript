@@ -19,7 +19,9 @@ The purpose of this helper is to keep a copy of the guide and show relevant info
 
 ####Screenshots:
 ![Screenshot 1](http://i.imgur.com/u0AYO3G.png)
+
 ![Screenshot 2](http://i.imgur.com/jigVavP.png)
+
 ![Screenshot 3](http://i.imgur.com/5IDzh0O.png)
 
 ####Instructions:
