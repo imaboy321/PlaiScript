@@ -31,7 +31,7 @@ class Ui_Dialog(object):
         Dialog.setMaximumSize(QtCore.QSize(366, 87))
         Dialog.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/Resources/Resources/Fox.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setToolTip(_fromUtf8(""))
         Dialog.setWhatsThis(_fromUtf8(""))
@@ -125,3 +125,4 @@ class Ui_Dialog(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://github.com/RedSoloFox/PlaiScript\"><span style=\" font-size:7pt; text-decoration: underline; color:#0000ff;\">http://github.com/RedSoloFox/PlaiScript</span></a></p></body></html>", None))
         self.tabVersion.setTabText(self.tabVersion.indexOf(self.tab_2), _translate("Dialog", "Info", None))
 
+import PlaiScript_rc
