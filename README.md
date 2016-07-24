@@ -35,3 +35,7 @@ The purpose of this helper is to keep a copy of the guide and show relevant info
         2. Install dependencies w/ python 2.7
         3. Have an internet connection
         4. Run main.py
+
+#######Contributors
+    All pull requests should be in the develop branch
+    All contributions will be considered as this is a learning experience for me.
